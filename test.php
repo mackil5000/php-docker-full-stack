@@ -1,43 +1,19 @@
-<?php
+<?
 
 declare(strict_types=1);
 
-interface I
-{
-    const string Maggan = "Maggan";
-}
-
-
-class Foo implements I
-{
-    const string Test = "Test";
-}
-
-$t = new Foo();
-
-echo $t::Maggan;
+spl_autoload_register(function ($class) {
+    $formattedClass = str_replace("\\", "/", $class);
+    $path = "{$formattedClass}.php";
+    require_once $path;
+});
 
 
 
+use App\{Account, SocialMedia};
 
-function slices(string $series, int $size): array
-{
-    $slices = [];
-    $sl = strlen($series);
-    if ($sl < $size || $size < 1) return $slices;
-
-    for ($i = 0; $i < $sl; $i++) {
-
-        if ($sl - $i < $size) break;
-
-        array_push($slices, substr($series, $i, $size));
-    }
-    return $slices;
-}
+$myAccount = new Account("marcus", 300);
 
 
-slices("12345", 1);
-slices("12345", 2);
-slices("12345", 3);
-slices("12345", 4);
-slices("12345", 5);
+$myAccount?->deposit(30)->deposit(20);
+var_dump($myAccount::$count);
