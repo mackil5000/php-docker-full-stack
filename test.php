@@ -8,7 +8,7 @@ spl_autoload_register(function ($class) {
     require_once $path;
 });
 
-
+new Error();
 
 use App\{Account, SocialMedia};
 

@@ -1,6 +1,6 @@
 version: '3'
 services:
-  db: 
+  db:
     image: mysql:latest
     environment:
       - MYSQL_DATABASE=php_docker
@@ -8,18 +8,22 @@ services:
       - MYSQL_PASSWORD=password # this should live in a env var
       - MYSQL_ALLOW_EMPTY_PASSWORD=1 # equivalent to True
     volumes:
-      - "./db:/docker-entrypoint-initdb.d" # this is how we persist a sql db even when container stops
+      - './db:/docker-entrypoint-initdb.d' # this is how we persist a sql db even when container stops
   www:
+    build: ./docker/php/
     image: php:apache
     volumes:
-      - "./:/var/www/html" # sync the current dir on local machine to the dir of container
+      - './:/var/www/html' # sync the current dir on local machine to the dir of container
+      - ./docker/php/conf.d/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+      - ./docker/php/conf.d/error_reporting.ini:/usr/local/etc/php/conf.d/error_reporting.ini
+
     ports:
       - 80:80
       - 443:443 # for future ssl traffic
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     ports:
-      - 8001:80
+      - 8002:80
     environment:
       - PMA_HOST=db
       - PMA_PORT=3306
