@@ -17,16 +17,31 @@ class Account {
 
     public function __construct(
         public string $name,
-        public float $balance
+        private float $balance
     ) {
         $this->socialMedia = new SocialMedia();
-
         self::$count++;
     }
 
     public function deposit(float $amount) {
         $this->balance += $amount;
-
         return $this;
+    }
+
+    public function getBalance() {
+        return "$" . $this->balance;
+    }
+
+    public function sendEmail() {
+        print("Email sent");
+    }
+
+    public function setBalance(float $newBalance) {
+        if ($newBalance < 0) {
+            return;
+        }
+
+        $this->balance = $newBalance;
+        $this->sendEmail();
     }
 }
