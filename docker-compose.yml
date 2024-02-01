@@ -18,7 +18,7 @@ services:
       - ./docker/php/conf.d/error_reporting.ini:/usr/local/etc/php/conf.d/error_reporting.ini
 
     ports:
-      - 80:80
+      - 8282:80
       - 443:443 # for future ssl traffic
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
